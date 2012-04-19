@@ -3163,7 +3163,7 @@ var datePickerController = (function datePickerController() {
         };   
     };
     var checkElem = function(elem) {                        
-        return !(!elem || !elem.tagName || !((elem.tagName.toLowerCase() == "input" && (elem.type == "text" || elem.type == "hidden")) || elem.tagName.toLowerCase() == "select"));                
+        return !(!elem || !elem.tagName || !((elem.tagName.toLowerCase() == "input" && (elem.type == "date" || elem.type == "text" || elem.type == "hidden")) || elem.tagName.toLowerCase() == "select"));                
     };
     var addDatePicker = function(options) {  
         updateLanguage();
