@@ -33,6 +33,7 @@
     {
     position:absolute;        
     z-index:9999;
+    min-width: 220px;
     text-align:center;
     /* 
     Change the font-size to suit your needs. The following line is for the demo

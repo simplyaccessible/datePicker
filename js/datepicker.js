@@ -568,11 +568,20 @@ var datePickerController = (function datePickerController() {
                 scrollLeft  = sOffsets[0],
                 tSpace      = parseInt(pos[1] - 2) - parseInt(scrollTop),
                 bSpace      = parseInt(trueBody.clientHeight + scrollTop) - parseInt(pos[1] + elem.offsetHeight + 2); 
-           
+                
+            var position = $('#fd-but-date_birth').position();
+            
             o.div.style.visibility = "visible";
-
+            
+            $(o.div).css({
+            	top: position.top - $(o.div).outerHeight(),
+            	left: position.left
+            })
+            
+/*
             o.div.style.left = Number(parseInt(trueBody.clientWidth+scrollLeft) < parseInt(osw+pos[0]) ? Math.abs(parseInt((trueBody.clientWidth+scrollLeft) - osw)) : pos[0]) + "px";
             o.div.style.top  = (bSpace > tSpace) ? Math.abs(parseInt(pos[1] + elem.offsetHeight + 2)) + "px" : Math.abs(parseInt(pos[1] - (osh + 2))) + "px";
+*/
             /*@cc_on
             @if(@_jscript_version <= 5.7)
             if(o.isIE7) return;
@@ -1103,7 +1112,10 @@ var datePickerController = (function datePickerController() {
             if(!this.staticPos) {
                 this.div.style.visibility = "hidden";
                 this.div.className += dragEnabledCN;
+                var input = document.getElementById(this.id);
+                
                 document.getElementsByTagName('body')[0].appendChild(this.div);
+                input.parentNode.appendChild(this.div);
                                               
                 /*@cc_on
                 @if(@_jscript_version <= 5.7) 
