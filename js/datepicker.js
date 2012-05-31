@@ -1062,10 +1062,11 @@ var datePickerController = (function datePickerController() {
                 for(var i = 0, details; details = obj[i]; i++) {
                     var th = createTH(details);
                     tr.appendChild(th);
-                    var but = document.createElement('span');
+                    var but = document.createElement('a');
                     but.className = details.className;
                     but.id = o.id + details.id;
-                    but.appendChild(document.createTextNode(details.text || o.nbsp));
+                    but.href = "#" + but.id;
+                    but.innerHTML = details.text || o.nbsp;
                     but.title = details.title || "";                                          
                     /*@cc_on
                     /*@if(@_win32)
@@ -1215,13 +1216,18 @@ var datePickerController = (function datePickerController() {
             tr  = document.createElement('tr');
             setARIARole(tr, "presentation");
             tableHead.appendChild(tr);
+            
+            var btnPrevYear = "<span>" + title:getTitleTranslation(2) + "</span><span aria-hidden=\"true\">\u00AB</span>",
+                btnPrevMonth,
+                btnNextMonth,
+                btnNextYear;
 
             createThAndButton(tr, [
-            {className:"prev-but prev-year",  id:"-prev-year-but", text:"\u00AB", title:getTitleTranslation(2) },
-            {className:"prev-but prev-month", id:"-prev-month-but", text:"\u2039", title:getTitleTranslation(0) },
+            {className:"prev-but prev-year",  href: "-prev-year-but", id:"-prev-year-but", text:btnPrevYear, title:getTitleTranslation(2) },
+            {className:"prev-but prev-month", href: "-prev-month-but", id:"-prev-month-but", text:"<span>Previous Month</span><span aria-hidden=\"true\">\u2039</span>", title:getTitleTranslation(0) },
             {colspan:this.showWeeks ? 4 : 3, className:"today-but", id:"-today-but", text:getTitleTranslation(4)},
-            {className:"next-but next-month", id:"-next-month-but", text:"\u203A", title:getTitleTranslation(1)},
-            {className:"next-but next-year",  id:"-next-year-but", text:"\u00BB", title:getTitleTranslation(3) }
+            {className:"next-but next-month", href: "-next-month-but", id:"-next-month-but", text:"<span>Next Month</span><span aria-hidden=\"true\">\u203A</span>", title:getTitleTranslation(1)},
+            {className:"next-but next-year",  href: "-year-year-but", id:"-next-year-but", text:"<span>Next Year</span><span aria-hidden=\"true\">\u00BB</span>", title:getTitleTranslation(3) }
             ]);
 
             tableBody = document.createElement('tbody');
@@ -1518,7 +1524,7 @@ var datePickerController = (function datePickerController() {
                     break; 
                 };
             };
-                        
+
             return stopEvent(e);                                                
         };
                 

@@ -586,8 +586,8 @@
 */
 .date-picker .date-picker-selected-date
     {
-    border-color:#888 !important;
-    border-color:rgba(7,7,7,.6) !important;
+    border-color:#888;
+    border-color:rgba(7,7,7,.6);
     }
 /* 
     The date "out of range" style 
