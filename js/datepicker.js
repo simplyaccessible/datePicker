@@ -1705,11 +1705,26 @@ var datePickerController = (function datePickerController() {
                 o.dateSet = new Date(o.date);
                 o.callback("dateset", o.createCbArgObj()); 
                 o.returnFormattedDate();    
+
+                var button = document.getElementById('fd-but-'+o.id);
+                button.setAttribute('title',getTitleTranslation(5));
+                
+                var spans = button.getElementsByTagName('span');
+                var label = spans[spans.length-1];
+                label.innerHTML = getTitleTranslation(5);
+
                 o.hide();
                 return stopEvent(e);
             } else if(kc == 27) {
                 // ESC: close, no date selection 
                 if(!o.staticPos) {
+                    var button = document.getElementById('fd-but-'+o.id);
+                    button.setAttribute('title',getTitleTranslation(5));
+                    
+                    var spans = button.getElementsByTagName('span');
+                    var label = spans[spans.length-1];
+                    label.innerHTML = getTitleTranslation(5);
+                
                     o.hide();
                     return stopEvent(e);
                 };
@@ -2783,7 +2798,7 @@ var datePickerController = (function datePickerController() {
         monthAbbrs:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
         fullDays:  ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
         dayAbbrs:  ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
-        titles:    ["Previous month","Next month","Previous year","Next year", "Today", "Show Calendar", "wk", "Week [[%0%]] of [[%1%]]", "Week", "Select a date", "Click \u0026 Drag to move", "Display \u201C[[%0%]]\u201D first", "Go to Today\u2019s date", "Disabled date :"],
+        titles:    ["Previous month","Next month","Previous year","Next year", "Today", "Open Calendar", "wk", "Week [[%0%]] of [[%1%]]", "Week", "Select a date", "Click \u0026 Drag to move", "Display \u201C[[%0%]]\u201D first", "Go to Today\u2019s date", "Disabled date :","Close Calendar"],
         rtl:       false,
         firstDayOfWeek:0,
         imported:  false
@@ -2819,6 +2834,14 @@ var datePickerController = (function datePickerController() {
             if(!datePickers[dp].created || (exception && exception == datePickers[dp].id)) {
                 continue;
             };
+            
+            var button = document.getElementById('fd-but-'+datePickers[dp].id);
+            button.setAttribute('title',getTitleTranslation(5));
+            
+            var spans = button.getElementsByTagName('span');
+            var label = spans[spans.length-1];
+            label.innerHTML = getTitleTranslation(5);
+
             datePickers[dp].hide();
         };
     };
@@ -2827,6 +2850,14 @@ var datePickerController = (function datePickerController() {
             if(!datePickers[inpID].created || datePickers[inpID].staticPos) {
                 return;
             };
+
+            var button = document.getElementById('fd-but-'+datePickers[inpID].id);
+            button.setAttribute('title',getTitleTranslation(5));
+
+            var spans = button.getElementsByTagName('span');
+            var label = spans[spans.length-1];
+            label.innerHTML = getTitleTranslation(5);
+
             datePickers[inpID].hide();
         };
     };
@@ -2835,7 +2866,15 @@ var datePickerController = (function datePickerController() {
             return false;
         };   
         
-        datePickers[inpID].clickActivated = !!!autoFocus;             
+        datePickers[inpID].clickActivated = !!!autoFocus;
+
+        var button = document.getElementById('fd-but-'+datePickers[inpID].id);
+        button.setAttribute('title',getTitleTranslation(14));
+        
+        var spans = button.getElementsByTagName('span');
+        var label = spans[spans.length-1];
+        label.innerHTML = getTitleTranslation(14);
+
         datePickers[inpID].show(autoFocus);
         return true;        
     };
