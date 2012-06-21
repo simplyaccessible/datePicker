@@ -608,7 +608,7 @@ var datePickerController = (function datePickerController() {
         };
                 
         // Sets the tabindex & focus on the currently highlighted cell
-        this.setNewFocus = function() {                                                                                             
+        this.setNewFocus = function(headerLink) {                                                                                             
             var td = document.getElementById(o.id + "-date-picker-hover");
             if(td) {
                 try {                                             
@@ -627,8 +627,11 @@ var datePickerController = (function datePickerController() {
                     
                     // Try to programmatically set focus on the cell
                     if(!this.noFocus && !this.clickActivated) {                                                                                                                                                   
-                        setTimeout(function() { try { td.focus(); } catch(err) {}; }, 0);
+                        //setTimeout(function() { try { td.focus(); } catch(err) {}; }, 0);
                     };                                         
+                    if(typeof headerLink !== 'undefined') {
+                        headerLink.focus();
+                    }
                 } catch(err) { };
             };
         };
@@ -679,7 +682,7 @@ var datePickerController = (function datePickerController() {
         };
                 
         // Updates the table used to display the datepicker                  
-        this.updateTable = function(noCallback) {  
+        this.updateTable = function(headerLink) {  
             if(!o || o.inUpdate || !o.created) {
                 return;
             };
@@ -956,8 +959,13 @@ var datePickerController = (function datePickerController() {
             
             // We are not currently updating the UI
             o.inUpdate = o.delayedUpdate = false; 
+            // Set focus to headerLink if one was passed
+            if(typeof headerLink !== 'undefined') {
+                o.setNewFocus(headerLink);
             // Focus on the correct TD node
-            o.setNewFocus();                         
+            } else {
+                o.setNewFocus();
+            }
         };
         
         // Removes all scaffold from the DOM & events from memory
@@ -1503,8 +1511,8 @@ var datePickerController = (function datePickerController() {
                         };  
                     };
                                     
-                    o.updateTable();
-                    o.stopTimer(); 
+                    o.updateTable(el);
+                    o.stopTimer();
                     break;
                 };
                 try { 
@@ -1573,7 +1581,7 @@ var datePickerController = (function datePickerController() {
             @end
             @*/                               
                         
-            this.setNewFocus(); 
+            //this.setNewFocus(); 
             this.fade();
             var butt = document.getElementById('fd-but-' + this.id);
             if(butt) { 
