@@ -1384,6 +1384,7 @@ var datePickerController = (function datePickerController() {
             o.div.style.zIndex = 9999;
         }; 
         this.onmousedown = function(e) {
+        
             e = e || document.parentWindow.event;
             var el     = e.target != null ? e.target : e.srcElement,
                 origEl = el,
@@ -1413,46 +1414,9 @@ var datePickerController = (function datePickerController() {
                         
             if((o.div.className + origEl.className).search('fd-disabled') != -1) { 
                 return true; 
-            };                                                                                                            
-                        
-            // We check the mousedown events on the buttons
-            if(origEl.id.search(new RegExp("^" + o.id + "(-prev-year-but|-prev-month-but|-next-month-but|-next-year-but)$")) != -1) {
-                    
-                o.mouseDownElem = origEl;
-                
-                addEvent(document, "mouseup", o.clearTimer);
-                addEvent(origEl, "mouseout",  o.clearTimer); 
-                                                 
-                var incs = {
-                        "-prev-year-but":[0,-1,0],
-                        "-prev-month-but":[0,0,-1],
-                        "-next-year-but":[0,1,0],
-                        "-next-month-but":[0,0,1]
-                    },
-                    check = origEl.id.replace(o.id, ""),
-                    dateYYYYMM = Number(o.date.getFullYear() + pad(o.date.getMonth()+1));
-                            
-                o.timerInc      = 800;
-                o.timerSet      = true;
-                o.dayInc        = incs[check][0];
-                o.yearInc       = incs[check][1];
-                o.monthInc      = incs[check][2]; 
-                o.accellerator  = 1;
-                                
-                if(!(o.currentYYYYMM == dateYYYYMM)) {
-                    if((o.currentYYYYMM < dateYYYYMM && (o.yearInc == -1 || o.monthInc == -1)) || (o.currentYYYYMM > dateYYYYMM && (o.yearInc == 1 || o.monthInc == 1))) {
-                        o.delayedUpdate = false; 
-                        o.timerInc = 1200;                                                
-                    } else {
-                        o.delayedUpdate = true;
-                    };  
-                };
-                                
-                o.updateTable();    
-                
-                return stopEvent(e);
-                                                            
-            } else if(el.className.search("drag-enabled") != -1) {                                  
+            };
+
+            if(el.className.search("drag-enabled") != -1) {                                  
                     o.mx = e.pageX ? e.pageX : e.clientX ? e.clientX : e.x;
                     o.my = e.pageY ? e.pageY : e.clientY ? e.clientY : e.Y;
                     o.x  = parseInt(o.div.style.left, 10);
@@ -1467,6 +1431,7 @@ var datePickerController = (function datePickerController() {
             return true;                                                                      
         }; 
         this.onclick = function(e) {
+        
             if(o.opacity != o.opacityTo || o.disabled) {
                 return stopEvent(e);
             };
@@ -1512,6 +1477,35 @@ var datePickerController = (function datePickerController() {
                     o.firstDayOfWeek = (o.firstDayOfWeek + cnt) % 7;
                     o.updateTableHeaders();
                     break;     
+                } else if(el.id.search(new RegExp("^" + o.id + "(-prev-year-but|-prev-month-but|-next-month-but|-next-year-but)$")) != -1) {
+                    var incs = {
+                            "-prev-year-but":[0,-1,0],
+                            "-prev-month-but":[0,0,-1],
+                            "-next-year-but":[0,1,0],
+                            "-next-month-but":[0,0,1]
+                        },
+                        check = el.id.replace(o.id, ""),
+                        dateYYYYMM = Number(o.date.getFullYear() + pad(o.date.getMonth()+1));
+                                
+                    o.timerInc      = 800;
+                    o.timerSet      = true;
+                    o.dayInc        = incs[check][0];
+                    o.yearInc       = incs[check][1];
+                    o.monthInc      = incs[check][2]; 
+                    o.accellerator  = 1;
+                                    
+                    if(!(o.currentYYYYMM == dateYYYYMM)) {
+                        if((o.currentYYYYMM < dateYYYYMM && (o.yearInc == -1 || o.monthInc == -1)) || (o.currentYYYYMM > dateYYYYMM && (o.yearInc == 1 || o.monthInc == 1))) {
+                            o.delayedUpdate = false; 
+                            o.timerInc = 1200;                                                
+                        } else {
+                            o.delayedUpdate = true;
+                        };  
+                    };
+                                    
+                    o.updateTable();
+                    o.stopTimer(); 
+                    break;
                 };
                 try { 
                     el = el.parentNode; 
