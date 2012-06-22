@@ -11,6 +11,7 @@ var datePickerController = (function datePickerController() {
         bespokeTitles       = {},
         uniqueId            = 0,
         finalOpacity        = 100,
+        icon                = '/images/datepicker.png',
         buttonTabIndex      = true,
         mouseWheel          = true,
         deriveLocale        = true,
@@ -247,6 +248,12 @@ var datePickerController = (function datePickerController() {
                     };
                     return true;
                 },
+                "icon":function(value) {
+                    if(typeof value === "string") {
+                        icon = value;
+                    };
+                    return true;
+                },
                 "bespoketitles":function(value) {
                     if(typeof value === "object") {
                         bespokeTitles = {};
@@ -285,7 +292,7 @@ var datePickerController = (function datePickerController() {
             if(typeof JSON === "object" && JSON.parse) {
                 return window.JSON.parse(str);
             // Genious code taken from: http://kentbrewster.com/badges/
-            } else if(/debug|lang|nodrag|buttontabindex|derivelocale|mousewheel|cellformat|titleformat|statusformat|describedby|finalopacity|bespoketitles/.test(str.toLowerCase())) {
+            } else if(/debug|lang|nodrag|buttontabindex|derivelocale|mousewheel|cellformat|titleformat|statusformat|describedby|finalopacity|icon|bespoketitles/.test(str.toLowerCase())) {
                 var f = Function(['var document,top,self,window,parent,Number,Date,Object,Function,',
                     'Array,String,Math,RegExp,Image,ActiveXObject;',
                     'return (' , str.replace(/<\!--.+-->/gim,'').replace(/\bfunction\b/g,'function-') , ');'].join(''));
@@ -1461,6 +1468,14 @@ if(element && element.tagName) {
                     o.noFocus    = true;
                     o.callback("dateset", { "id":o.id, "date":o.dateSet, "dd":o.dateSet.getDate(), "mm":o.dateSet.getMonth() + 1, "yyyy":o.dateSet.getFullYear() });
                     o.returnFormattedDate();
+
+                    var button = document.getElementById('fd-but-'+o.id);
+                    button.setAttribute('title',getTitleTranslation(5));
+                    
+                    var img = button.getElementsByTagName('img'),
+                        img = img[img.length-1];
+                    img.setAttribute('alt', getTitleTranslation(5));
+
                     o.hide();
                     o.stopTimer();
                     break;
@@ -1526,6 +1541,7 @@ if(element && element.tagName) {
         };
                 
         this.show = function(autoFocus) {
+            console.log(this);
             if(this.staticPos) {
                 return;
             };
@@ -1716,9 +1732,9 @@ if(element && element.tagName) {
                     var button = document.getElementById('fd-but-'+o.id);
                     button.setAttribute('title',getTitleTranslation(5));
                     
-                    var spans = button.getElementsByTagName('span');
-                    var label = spans[spans.length-1];
-                    label.innerHTML = getTitleTranslation(5);
+                    var img = button.getElementsByTagName('img'),
+                        img = img[img.length-1];
+                    img.setAttribute('alt', getTitleTranslation(5));
     
                     o.hide();
                     return stopEvent(e);
@@ -1729,9 +1745,9 @@ if(element && element.tagName) {
                     var button = document.getElementById('fd-but-'+o.id);
                     button.setAttribute('title',getTitleTranslation(5));
                     
-                    var spans = button.getElementsByTagName('span');
-                    var label = spans[spans.length-1];
-                    label.innerHTML = getTitleTranslation(5);
+                    var img = button.getElementsByTagName('img'),
+                        img = img[img.length-1];
+                    img.setAttribute('alt', getTitleTranslation(5));
                 
                     o.hide();
                     var butt = document.getElementById('fd-but-' + o.id);
@@ -2089,7 +2105,7 @@ if(element && element.tagName) {
         };
 
         var inp         = document.getElementById(this.id),
-            span        = document.createElement('span'),
+            img        = document.createElement('img'),
             but         = document.createElement('a');
 
         but.href        = "#" + this.id;
@@ -2097,13 +2113,9 @@ if(element && element.tagName) {
         but.title       = getTitleTranslation(5);
         but.id          = "fd-but-" + this.id;
                                 
-        span.appendChild(document.createTextNode(nbsp));
-        but.appendChild(span);
-
-        span = document.createElement('span');
-        span.className = "fd-screen-reader";
-        span.appendChild(document.createTextNode(but.title));
-        but.appendChild(span);
+        img.setAttribute('src', this.icon);
+        img.setAttribute('alt', but.title);
+        but.appendChild(img);
                 
         // Set the ARIA role to be "button"
         setARIARole(but, "button");
@@ -2853,9 +2865,9 @@ if(!noFocus) {
             var button = document.getElementById('fd-but-'+datePickers[dp].id);
             button.setAttribute('title',getTitleTranslation(5));
             
-            var spans = button.getElementsByTagName('span');
-            var label = spans[spans.length-1];
-            label.innerHTML = getTitleTranslation(5);
+            var img = button.getElementsByTagName('img'),
+                img = img[img.length-1];
+            img.setAttribute('alt', getTitleTranslation(5));
 
             datePickers[dp].hide();
         };
@@ -2869,9 +2881,9 @@ if(!noFocus) {
             var button = document.getElementById('fd-but-'+datePickers[inpID].id);
             button.setAttribute('title',getTitleTranslation(5));
 
-            var spans = button.getElementsByTagName('span');
-            var label = spans[spans.length-1];
-            label.innerHTML = getTitleTranslation(5);
+            var img = button.getElementsByTagName('img'),
+                img = img[img.length-1];
+            img.setAttribute('alt', getTitleTranslation(5));
 
             datePickers[inpID].hide();
         };
@@ -2886,9 +2898,9 @@ if(!noFocus) {
         var button = document.getElementById('fd-but-'+datePickers[inpID].id);
         button.setAttribute('title',getTitleTranslation(14));
         
-        var spans = button.getElementsByTagName('span');
-        var label = spans[spans.length-1];
-        label.innerHTML = getTitleTranslation(14);
+        var img = button.getElementsByTagName('img'),
+            img = img[img.length-1];
+        img.setAttribute('alt', getTitleTranslation(14));
 
         datePickers[inpID].show(autoFocus);
         return true;
@@ -3407,6 +3419,8 @@ if(!noFocus) {
             rangeHigh:options.rangeHigh && String(options.rangeHigh).search(rangeRegExp) != -1 ? options.rangeHigh : "",
             // Status bar format
             statusFormat:options.statusFormat || statusFormat,
+            // Icon
+            icon:options.icon || icon,
             // No fade in/out effect
             noFadeEffect:!!(options.staticPos) ? true : !!(options.noFadeEffect),
             // No drag functionality
