@@ -1581,13 +1581,12 @@ if(element && element.tagName) {
             @end
             @*/
                         
-            //this.setNewFocus();
+            this.setNewFocus();
             this.fade();
             var butt = document.getElementById('fd-but-' + this.id);
             if(butt) {
                 addClass(butt, "date-picker-button-active");
             };
-            console.log(this);
             this.div.tabIndex = -1;
             this.div.focus();
         };
@@ -1644,7 +1643,7 @@ if(element && element.tagName) {
         };
                 
         this.onblur = function(e) {
-            o.hide();
+            //o.hide();
         };
         // The current cursor cell gains focus
         this.onfocus = function(e) {
@@ -1702,24 +1701,26 @@ if(element && element.tagName) {
             var kc = e.keyCode ? e.keyCode : e.charCode;
                     
             if(kc == 13) {
-                // RETURN/ENTER: close & select the date
+                // RETURN/ENTER: close & select the date if a date has focus
                 var td = document.getElementById(o.id + "-date-picker-hover");
-                if(!td || td.className.search(/cd-([0-9]{8})/) == -1 || td.className.search(/out-of-range|day-disabled/) != -1) {
+                if(td === document.activeElement) {
+                    if(!td || td.className.search(/cd-([0-9]{8})/) == -1 || td.className.search(/out-of-range|day-disabled/) != -1) {
+                        return stopEvent(e);
+                    };
+                    o.dateSet = new Date(o.date);
+                    o.callback("dateset", o.createCbArgObj());
+                    o.returnFormattedDate();
+    
+                    var button = document.getElementById('fd-but-'+o.id);
+                    button.setAttribute('title',getTitleTranslation(5));
+                    
+                    var spans = button.getElementsByTagName('span');
+                    var label = spans[spans.length-1];
+                    label.innerHTML = getTitleTranslation(5);
+    
+                    o.hide();
                     return stopEvent(e);
-                };
-                o.dateSet = new Date(o.date);
-                o.callback("dateset", o.createCbArgObj());
-                o.returnFormattedDate();
-
-                var button = document.getElementById('fd-but-'+o.id);
-                button.setAttribute('title',getTitleTranslation(5));
-                
-                var spans = button.getElementsByTagName('span');
-                var label = spans[spans.length-1];
-                label.innerHTML = getTitleTranslation(5);
-
-                o.hide();
-                return stopEvent(e);
+                }
             } else if(kc == 27) {
                 // ESC: close, no date selection
                 if(!o.staticPos) {
@@ -1740,12 +1741,14 @@ if(element && element.tagName) {
                 o.updateTable();
                 return stopEvent(e);
             } else if(kc == 9) {
-                console.log('here');
-                // TAB: close, no date selection & focus back to associated button - popup datepickers only
+                // JS: Closing should require an explicit action, esc or choosing a date.
+                /* TAB: close, no date selection & focus back to associated button - popup datepickers only
+
                 if(!o.staticPos) {
-                    return stopEvent(e);
+                    stopEvent(e);
                 };
-                return true;
+
+                return true;*/
             };
             // TODO - test the need for the IE specific stuff in IE9
                                 
