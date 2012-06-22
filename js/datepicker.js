@@ -626,8 +626,8 @@ if(element && element.tagName) {
                     };
                     
                     // Try to programmatically set focus on the cell
-                    if(!this.noFocus && !this.clickActivated) {
-                        //setTimeout(function() { try { td.focus(); } catch(err) {}; }, 0);
+                    if(!this.noFocus && !this.clickActivated && typeof headerLink === 'undefined') {
+                        setTimeout(function() { try { td.focus(); } catch(err) {}; }, 0);
                     };
                     if(typeof headerLink !== 'undefined') {
                         headerLink.focus();
@@ -1587,8 +1587,10 @@ if(element && element.tagName) {
             if(butt) {
                 addClass(butt, "date-picker-button-active");
             };
+/*
             this.div.tabIndex = -1;
             this.div.focus();
+*/
         };
         this.hide = function() {
             if(!this.visible || !this.created || !document.getElementById('fd-' + this.id)) {
@@ -1732,6 +1734,10 @@ if(element && element.tagName) {
                     label.innerHTML = getTitleTranslation(5);
                 
                     o.hide();
+                    var butt = document.getElementById('fd-but-' + o.id);
+                    if(butt) {
+                        butt.focus();
+                    };
                     return stopEvent(e);
                 };
                 return true;
