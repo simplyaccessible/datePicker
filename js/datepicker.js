@@ -1586,7 +1586,10 @@ var datePickerController = (function datePickerController() {
             var butt = document.getElementById('fd-but-' + this.id);
             if(butt) { 
                   addClass(butt, "date-picker-button-active");
-            };                                                
+            };
+            console.log(this);
+            this.div.tabIndex = -1;
+            this.div.focus();
         };
         this.hide = function() {                        
             if(!this.visible || !this.created || !document.getElementById('fd-' + this.id)) {
