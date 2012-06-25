@@ -1541,7 +1541,6 @@ if(element && element.tagName) {
         };
                 
         this.show = function(autoFocus) {
-            console.log(this);
             if(this.staticPos) {
                 return;
             };
