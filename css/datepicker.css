@@ -4,6 +4,14 @@
     file to update the image locations to suit your installation).
 */
 
+/*
+	Text to be used for aria-describedby to identify today's full date
+*/
+#todaysDate {
+	position: absolute;
+	left: -99999em;
+}
+
 /* 
     Hide the datepickers associated input by using a className 
 */
@@ -33,7 +41,7 @@
     {
     position:absolute;        
     z-index:9999;
-    min-width: 220px;
+    width: 20.0em;
     text-align:center;
     /* 
     Change the font-size to suit your needs. The following line is for the demo

@@ -575,15 +575,16 @@ if(element && element.tagName) {
                 scrollLeft  = sOffsets[0],
                 tSpace      = parseInt(pos[1] - 2) - parseInt(scrollTop),
                 bSpace      = parseInt(trueBody.clientHeight + scrollTop) - parseInt(pos[1] + elem.offsetHeight + 2);
-                
-            var position = $('#fd-but-date_birth').position();
+            
+            var $button = $('#fd-but-date_birth'),
+            	position = $button.position();
             
             o.div.style.visibility = "visible";
             
             $(o.div).css({
-            top: position.top - $(o.div).outerHeight(),
-            left: position.left
-            })
+	            top: position.top - 5,
+	            left: position.left + parseFloat($button.css('margin-left'),10)
+            });
             
 /*
             o.div.style.left = Number(parseInt(trueBody.clientWidth+scrollLeft) < parseInt(osw+pos[0]) ? Math.abs(parseInt((trueBody.clientWidth+scrollLeft) - osw)) : pos[0]) + "px";
@@ -870,11 +871,6 @@ if(element && element.tagName) {
                             cName.push("yyyymm-" + currentStub + " mmdd-" + currentStub.substr(4,2) + pad(dt) + " not-selectable");
                         };
                         
-                        // Add a classname if the current cells date is today
-                        if(currentDate == today) {
-                            cName.push("date-picker-today");
-                        };
-
                         // If this cell represents the currently selected date
                         if(dateSetD == currentDate) {
                             // Add a classname (for styling purposes)
@@ -1239,7 +1235,7 @@ if(element && element.tagName) {
             {className:"next-but next-month", href: "-next-month-but", id:"-next-month-but", text:"<span>" + getTitleTranslation(1) + "</span><span aria-hidden=\"true\">\u203A</span>", title:getTitleTranslation(1)},
             {className:"next-but next-year",  href: "-year-year-but", id:"-next-year-but", text:"<span>" + getTitleTranslation(3) + "</span><span aria-hidden=\"true\">\u00BB</span>", title:getTitleTranslation(3) }
             ]);
-
+            
             tableBody = document.createElement('tbody');
             this.table.appendChild(tableBody);
 
@@ -1602,10 +1598,6 @@ if(element && element.tagName) {
             if(butt) {
                 addClass(butt, "date-picker-button-active");
             };
-/*
-            this.div.tabIndex = -1;
-            this.div.focus();
-*/
         };
         this.hide = function() {
             if(!this.visible || !this.created || !document.getElementById('fd-' + this.id)) {
@@ -2130,9 +2122,21 @@ if(element && element.tagName) {
                 
         this.addButtonEvents(but);
 
+        // Position the control
+        var $button = $(but),
+        	$input = $($button.attr('href')),
+        	position = $button.position();
+        	
+        $(but).css({
+        	position: 'absolute',
+	        top: $(position.top - 3).toEm({ scope: 'form p' }),
+	        left: $(position.left - 27).toEm({ scope: 'form p' })
+        });
+        
         but = null;
         
         this.callback("dombuttoncreate", {id:this.id});
+        
     };
     datePicker.prototype.setBespokeTitles = function(titles) {
         this.bespokeTitles = {};
@@ -2744,7 +2748,6 @@ if(!noFocus) {
                 removeChildNodes(but);
 
                 but.appendChild(document.createTextNode(getDayTranslation(d, true)));
-                but.title = this.ths[col].title;
                 but = null;
             } else {
                 removeChildNodes(this.ths[col]);
@@ -2826,7 +2829,7 @@ if(!noFocus) {
         dayAbbrs:  ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
         titles:    ["Previous month","Next month","Previous year","Next year", "Today", "Open Calendar: to navigate the calendar, use the arrow keys", "wk", "Week [[%0%]] of [[%1%]]", "Week", "Select a date", "Click \u0026 Drag to move", "Display \u201C[[%0%]]\u201D first", "Go to Today\u2019s date", "Disabled date :","Close Calendar"],
         rtl:       false,
-        firstDayOfWeek:0,
+        firstDayOfWeek:6,
         imported:  false
     };
     var joinNodeLists = function() {
@@ -3223,7 +3226,7 @@ if(!noFocus) {
                 monthAbbrs      : fdLocale.monthAbbrs,
                 fullDays        : fdLocale.fullDays,
                 dayAbbrs        : fdLocale.dayAbbrs,
-                firstDayOfWeek  : ("firstDayOfWeek" in fdLocale) ? fdLocale.firstDayOfWeek : 0,
+                firstDayOfWeek  : ("firstDayOfWeek" in fdLocale) ? fdLocale.firstDayOfWeek : 6,
                 rtl             : ("rtl" in fdLocale) ? !!(fdLocale.rtl) : false,
                 imported        : true
             };
@@ -3547,3 +3550,14 @@ if(!noFocus) {
         dateToYYYYMMDDStr:      function(dt) { return dateToYYYYMMDD(dt); }
     };
 })();
+
+$.fn.toEm = function(settings){
+	settings = jQuery.extend({
+		scope: 'body'
+	}, settings);
+	var that = parseInt(this[0],10),
+		scopeTest = jQuery('<div style="display: none; font-size: 1em; margin: 0; padding:0; height: auto; line-height: 1; border:0;">&nbsp;</div>').appendTo(settings.scope),
+		scopeVal = scopeTest.height();
+	scopeTest.remove();
+	return (that / scopeVal).toFixed(8) + 'em';
+};
