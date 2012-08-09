@@ -871,6 +871,11 @@ if(element && element.tagName) {
                             cName.push("yyyymm-" + currentStub + " mmdd-" + currentStub.substr(4,2) + pad(dt) + " not-selectable");
                         };
                         
+                        // Add a classname if the current cells date is today
+                        if(currentDate == today) {
+                            cName.push("date-picker-today");
+                        };
+
                         // If this cell represents the currently selected date
                         if(dateSetD == currentDate) {
                             // Add a classname (for styling purposes)
@@ -1236,6 +1241,17 @@ if(element && element.tagName) {
             {className:"next-but next-year",  href: "-year-year-but", id:"-next-year-but", text:"<span>" + getTitleTranslation(3) + "</span><span aria-hidden=\"true\">\u00BB</span>", title:getTitleTranslation(3) }
             ]);
             
+            // Append hidden text to identify today's date
+            var $todayButton = $('thead .today-but'),
+            	today = new Date(),
+            	todaysDate = localeImport.fullMonths[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear(),
+            	$todaySpan = $('<span/>',{
+	            	id: 'todaysDate',
+	            	text: " is " + todaysDate
+            	});
+            	
+            $todayButton.append($todaySpan);
+
             tableBody = document.createElement('tbody');
             this.table.appendChild(tableBody);
 
@@ -2723,16 +2739,12 @@ if(!noFocus) {
     datePicker.prototype.disableTodayButton = function() {
         var today = new Date();
         removeClass(this.butToday, "fd-disabled");
-        if(this.outOfRange(today)
-        ||
-        (this.date.getDate() == today.getDate()
-            &&
-            this.date.getMonth() == today.getMonth()
-            &&
-            this.date.getFullYear() == today.getFullYear())
-            ) {
+        removeClass(this.butToday, "fd-hidden");
+        if(this.outOfRange(today) || (this.date.getDate() == today.getDate() && this.date.getMonth() == today.getMonth() && this.date.getFullYear() == today.getFullYear())) {
             addClass(this.butToday, "fd-disabled");
-        };
+        } else if(this.date.getMonth() != today.getMonth()) {
+	        addClass(this.butToday, 'fd-hidden');
+        }
     };
     datePicker.prototype.updateTableHeaders = function() {
         var colspanTotal = this.showWeeks ? 8 : 7,
