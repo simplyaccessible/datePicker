@@ -2145,8 +2145,8 @@ if(element && element.tagName) {
         	
         $(but).css({
         	position: 'absolute',
-	        top: $(position.top - 3).toEm({ scope: 'form p' }),
-	        left: $(position.left - 27).toEm({ scope: 'form p' })
+	        top: position.top - 3,
+	        left: position.left - 27
         });
         
         but = null;
@@ -3562,14 +3562,3 @@ if(!noFocus) {
         dateToYYYYMMDDStr:      function(dt) { return dateToYYYYMMDD(dt); }
     };
 })();
-
-$.fn.toEm = function(settings){
-	settings = jQuery.extend({
-		scope: 'body'
-	}, settings);
-	var that = parseInt(this[0],10),
-		scopeTest = jQuery('<div style="display: none; font-size: 1em; margin: 0; padding:0; height: auto; line-height: 1; border:0;">&nbsp;</div>').appendTo(settings.scope),
-		scopeVal = scopeTest.height();
-	scopeTest.remove();
-	return (that / scopeVal).toFixed(8) + 'em';
-};
