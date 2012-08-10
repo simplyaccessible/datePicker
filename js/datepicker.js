@@ -1234,11 +1234,11 @@ if(element && element.tagName) {
             tableHead.appendChild(tr);
             
             createThAndButton(tr, [
-            {className:"prev-but prev-year",  href: "-prev-year-but", id:"-prev-year-but", text:"<span>" + getTitleTranslation(2) + "</span><span aria-hidden=\"true\">\u00AB</span>", title:getTitleTranslation(2) },
-            {className:"prev-but prev-month", href: "-prev-month-but", id:"-prev-month-but", text:"<span>" + getTitleTranslation(0) + "</span><span aria-hidden=\"true\">\u2039</span>", title:getTitleTranslation(0) },
-            {colspan:this.showWeeks ? 4 : 3, className:"today-but", id:"-today-but", text:getTitleTranslation(4)},
-            {className:"next-but next-month", href: "-next-month-but", id:"-next-month-but", text:"<span>" + getTitleTranslation(1) + "</span><span aria-hidden=\"true\">\u203A</span>", title:getTitleTranslation(1)},
-            {className:"next-but next-year",  href: "-year-year-but", id:"-next-year-but", text:"<span>" + getTitleTranslation(3) + "</span><span aria-hidden=\"true\">\u00BB</span>", title:getTitleTranslation(3) }
+            {className:"prev-but prev-year",  href: "-prev-year-but", id:"-prev-year-but", text:"<span>" + getTitleTranslation(2) + "</span><span aria-hidden=\"true\">\u00AB</span>", title:getTitleTranslation(2), thClassName:'date-picker-navigation' },
+            {className:"prev-but prev-month", href: "-prev-month-but", id:"-prev-month-but", text:"<span>" + getTitleTranslation(0) + "</span><span aria-hidden=\"true\">\u2039</span>", title:getTitleTranslation(0), thClassName:'date-picker-navigation' },
+            {colspan:this.showWeeks ? 4 : 3, className:"today-but", id:"-today-but", text:getTitleTranslation(4), thClassName:'date-picker-navigation' },
+            {className:"next-but next-month", href: "-next-month-but", id:"-next-month-but", text:"<span>" + getTitleTranslation(1) + "</span><span aria-hidden=\"true\">\u203A</span>", title:getTitleTranslation(1), thClassName:'date-picker-navigation' },
+            {className:"next-but next-year",  href: "-year-year-but", id:"-next-year-but", text:"<span>" + getTitleTranslation(3) + "</span><span aria-hidden=\"true\">\u00BB</span>", title:getTitleTranslation(3), thClassName:'date-picker-navigation' }
             ]);
             
             // Append hidden text to identify today's date

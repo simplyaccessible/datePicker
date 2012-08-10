@@ -506,7 +506,6 @@
     }
 /* 
     The "todays date" cell style 
-*/
 .date-picker .date-picker-today
     {
     background:#fff url(data:image/gif;base64,R0lGODlhKwEoAJEAAKnT6v////X6+gAAACH5BAAAAAAALAAAAAArASgAAALXjI+py+0Po5y02ouz3lz4D4biSJbmiabqyrbuC8fyLAcCgOf0zvf+DwwKhyJbDkdMKpfMpnNo1D2n1Kr1GowCsNyu99uNgsfksnlnPKvX7LbA5o7L51Q4/Y7P8+z6vv9fwgc4SJgnWIiYuHao2OgY9hgpecU4aXkJVIm5yQmj2QkaavIpWmpKapraiaraasnqGusIK1tbSGub64er23vH6xvsBixcfEZsnAyGrNyMxewcPQUtXb1EbZ0thK3d3cPtHV4jTl5Xft4Ejr4eyO6e9R7/LU8/UwAAOw==) no-repeat 0 0;
@@ -515,6 +514,7 @@
     {
     *background:#fff url(http://www.frequency-decoder.com/demo/datePicker/media/datepicker-today.gif) no-repeat 0 0;
     }
+*/
 .date-picker .month-out.date-picker-highlight 
     {
     color:#b87676;
@@ -560,7 +560,6 @@
 .date-picker .date-picker-hover,
 .date-picker .month-out.date-picker-hover
     {
-    background:#fff url(data:image/jpg;base64,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) no-repeat 0 0;
     cursor:pointer;
     border-color:rgb(100,130,170) !important;
     border-color:rgba(100,130,170,.7) !important;
@@ -570,11 +569,13 @@
        -moz-box-shadow:0 0 6px rgba(100,130,170,.6); 
             box-shadow:0 0 6px rgba(100,130,170,.6); 
     }
+/*
 .oldie .date-picker .date-picker-hover,
 .oldie .date-picker .month-out.date-picker-hover
     {
     *background:#fff url(http://www.frequency-decoder.com/demo/datePicker/media/datepicker-cursor.jpg) no-repeat 0 0;
     }
+*/
 /* 
     The "disabled days" style 
 */
