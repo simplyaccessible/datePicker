@@ -2141,12 +2141,12 @@ if(element && element.tagName) {
         // Position the control
         var $button = $(but),
         	$input = $($button.attr('href')),
-        	position = $button.position();
+        	position = $input.position();
         	
         $(but).css({
         	position: 'absolute',
-	        top: position.top - 3,
-	        left: position.left - 27
+	        top: position.top + 10,
+	        left: position.left + $input.width() - 7
         });
         
         but = null;
